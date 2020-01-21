@@ -25,3 +25,6 @@ once complete
 you can view the project with below url
 http://localhost:3000/
 
+## Framework
+
+NuxtJS - https://nuxtjs.org/
