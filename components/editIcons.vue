@@ -59,7 +59,7 @@ export default {
     }
     .editNav li a{
         font-size: 0.70rem;
-        color: rgba(102,102,102,0.5);
+        color: rgba(102,102,102,0.6);
         position:relative;
     }
     .badge{

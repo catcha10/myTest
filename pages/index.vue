@@ -14,20 +14,30 @@
         <label :for="customer.email" class="lbl-toggle">Promotions <span>({{ customer.promotions.length }})</span></label>
         <div class="collapsible-content">
           <div class="content-inner">
-            <ul class="promoList" >
-              <li v-for="(promotion, index) in customer.promotions" :key="index">
-                <div>
-                  <span class="promoTitle" ><nuxt-link to="/" title="Profile"  > {{ promotion.title }} </nuxt-link></span>
-                  <span class="promoType">{{ promotion.type }}</span>
-                </div>
-                <div><span v-if="promotion.discount" class="promoDisc" >- ${{ formatPrice(promotion.discount) }}</span></div>
-                <div><span class="promoQty" >{{ promotion.quantity }}</span></div>
-                <div class="editCust" >
-                  <EditIcons></EditIcons>
-                </div>
-              </li>
-              <li><button type="button" class="btnClass addPromo" >Add new promotion</button></li>
-            </ul>
+            
+            <table class="tableClass">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Type</th>
+                  <th>Discount</th>
+                  <th>Quantity</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(promotion, index) in customer.promotions" :key="index" >
+                  <td><nuxt-link to="/" title="Profile"  > {{ promotion.title }} </nuxt-link></td>
+                  <td>{{ promotion.type }}</td>
+                  <td><span v-if="promotion.discount" >- ${{ formatPrice(promotion.discount) }}</span></td>
+                  <td>{{ promotion.quantity }}</td>
+                  <td><EditIcons></EditIcons></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <button type="button" class="btnClass addPromo" >Add new promotion</button>
+
           </div>
         </div>
       </div>
@@ -119,7 +129,7 @@ input[type='checkbox'] {
 .collapsible-content .content-inner {
   background: rgba(185, 203, 219, .2);
   border-bottom: 1px solid rgba(185, 203, 219, .2);
-  padding: .5rem 1.5rem;
+  padding: 1.5rem 1.5rem;
 }
 
 .collapsible-content {
@@ -142,7 +152,7 @@ input[type='checkbox'] {
 }
 
 .customerList{
-  background-color:#eee;
+  background-color:#f8f8f8;
   padding:20px;
   position:relative;
 }
@@ -192,7 +202,7 @@ input[type='checkbox'] {
   content: "\f0e0";
   top:11px;
 }
-
+/*
 .promoList{
   margin:0px;
   padding:0px;
@@ -204,7 +214,8 @@ input[type='checkbox'] {
   font-size:0.875rem;
   font-family: helvetica;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 400;
+  color: #333;
   border-bottom:1px solid rgba(255,255,255,0.5);
   position:relative;
   padding-bottom:43px;
@@ -231,7 +242,7 @@ input[type='checkbox'] {
   content:"";
   position:absolute;
   left:0px;
-  color: rgba(102,102,102,0.5);
+  color: rgba(102,102,102,0.7);
 }
 
 .promoList li span{
@@ -247,7 +258,7 @@ input[type='checkbox'] {
 }
 
 .promoList li span.promoTitle a{
-  color: #41B883;
+  color: #3a77b2;
   text-decoration:none;
   font-weight: 500;
 }
@@ -283,7 +294,7 @@ input[type='checkbox'] {
 
 .promoList li:last-child{
   border-bottom:none;
-}
+}*/
 
 .btnClass{
   border:none;
@@ -313,26 +324,119 @@ input[type='checkbox'] {
   top: 7px;
 }
 
+.tableClass{
+  border-collapse: collapse;
+  min-width:55%;
+}
+
+table th{
+  font-family: helvetica;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.875rem;
+  color:#fff;
+  text-align:left;
+  background-color:#3a77b2;
+}
+th, td{
+  padding:12px 20px;
+  font-family: helvetica;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 0.875rem;
+}
+tr td:last-child , tr th:last-child{
+  text-align:center;
+}
+table, tr, th, td{
+  border: 1px solid #f8f8f8;
+}
+
+td a{
+    color: #3a77b2;
+    text-decoration: none;
+    font-weight: 500;
+}
+
 @media (max-width:768px){
   .container{
     width:100%;
   }
+  .tableClass{
+    min-width:100%;
+  }
 }
 
 @media (max-width:767px){
-  .promoList li span.promoTitle,
-  .promoList li span.promoType{
-    display:block;
-  }
 
   .custInfo{
     display:block;
     max-width:75%;
     margin-right:0px;
   }
-
   .custInfo:after{
     display:none;
+  }
+  .collapsible-content .content-inner{
+    padding:0.5rem;
+  }
+  table{
+    border:none;
+  }
+  table thead{
+    display:none;
+  }
+  table tr{
+    border:none;
+    border-bottom: 1px solid #f8f8f8;
+    padding:20px 15px;
+  }
+  table td{
+    border:none;
+    display:block;
+    padding:9px 8px 9px 85px;;
+  }
+  table td:last-child{
+    text-align:left;
+  }
+  table td{
+    position:relative;
+    min-height:18px;
+  }
+  table td:before{
+    content:"";
+    position:absolute;
+    left:10px;
+    top:9px;
+    font-family: helvetica;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 0.875rem;
+    color: #999;
+  }
+  table td:first-child{
+    margin-top:15px;
+  }
+  table td:last-child{
+    margin-bottom:15px;
+  }
+  table td:nth-child(1):before{
+    content:"Title: ";
+  }
+  table td:nth-child(2):before{
+    content:"Type: ";
+  }
+  table td:nth-child(3):before{
+    content:"Discount: ";
+  }
+  table td:nth-child(4):before{
+    content:"Quantity: ";
+  }
+  table td:nth-child(5):before{
+    content:"Action: ";
+  }
+  .app-content h1{
+    margin:10px 0;
   }
 }
 </style>
